@@ -266,7 +266,7 @@ function windowResized() {
   resizeCanvas(w, h);
 }
 ```
-Este intento salio no tanto como esperaba, se demora bastante en llegar las partículas y son muy grandes, esto se corrige facil cambiando el tamaño de partículas y su velocidad, además de poner un slider. Como algo adicional puse que al todas las estructuras tocar los bordes o entre si se reinicie el dibujo, para no sobre saturarlo y permitir que corra por todo el tiempo de la feria.
+Este intento salio no tanto como esperaba, se demora bastante en llegar las partículas y son muy grandes, esto se corrige facil cambiando el tamaño de partículas y su velocidad, además de poner un slider.
 <img width="416" height="772" alt="image" src="https://github.com/user-attachments/assets/8016b6f2-9005-43c9-a7e2-d1e60dccb650" />
 
 ##Versión Final
@@ -279,19 +279,18 @@ let userCores = [];
 const MAX_USER_CORES = 3;
 const NUM_WALKERS = 180; 
 const STICK_DISTANCE = 4.5; 
-const JUMP_PROBABILITY = 0.0003; 
 
-// Grilla espacial de optimización O(1)
+// Grilla espacial de optimización
 const GRID_SIZE = 12; 
 let grid = {};
 
 let initialSeedCreated = false;
 let startTime;
 let primarySeedPos = null;
-let speedSlider;
 
-// Seguidor de bordes para saturación
-let touchedEdges = { top: false, bottom: false, left: false, right: false };
+// UI
+let speedSlider;
+let resetButton;
 
 function setup() {
   let h = windowHeight;
@@ -303,10 +302,23 @@ function setup() {
   createCanvas(w, h);
   colorMode(HSB, 360, 255, 255, 255);
 
+  // Slider de Velocidad
   speedSlider = createSlider(1, 30, 8, 1);
   speedSlider.position(15, 15);
-  speedSlider.style('width', '100px');
-  speedSlider.style('opacity', '0.7');
+  speedSlider.style('width', '90px');
+  speedSlider.style('opacity', '0.8');
+
+  // Botón de Reinicio Manual
+  resetButton = createButton('Reiniciar');
+  resetButton.position(120, 15);
+  resetButton.style('opacity', '0.8');
+  resetButton.style('background-color', '#1a1a2e');
+  resetButton.style('color', '#ffffff');
+  resetButton.style('border', '1px solid #4a4e69');
+  resetButton.style('border-radius', '4px');
+  resetButton.style('padding', '2px 8px');
+  resetButton.style('cursor', 'pointer');
+  resetButton.mousePressed(resetSimulation);
 
   resetSimulation();
 }
@@ -316,7 +328,6 @@ function resetSimulation() {
   walkers = [];
   userCores = [];
   grid = {};
-  touchedEdges = { top: false, bottom: false, left: false, right: false };
   initialSeedCreated = false;
   primarySeedPos = null;
   startTime = millis();
@@ -342,13 +353,6 @@ function addTreeParticle(x, y) {
   let p = new TreeParticle(x, y, getDistanceToPrimary(createVector(x, y)));
   tree.push(p);
   addToGrid(p);
-
-  // Mapear saturación de bordes
-  if (x <= 6) touchedEdges.left = true;
-  if (x >= width - 6) touchedEdges.right = true;
-  if (y <= 6) touchedEdges.top = true;
-  if (y >= height - 6) touchedEdges.bottom = true;
-
   return p;
 }
 
@@ -361,7 +365,7 @@ function draw() {
     createInitialSeed(width / 2 + random(-20, 20), height / 2 + random(-20, 20));
   }
 
-  // Dibujar núcleos del usuario
+  // Dibujar núcleos adicionales
   fill(50, 255, 255, 120);
   noStroke();
   for (let core of userCores) {
@@ -381,9 +385,9 @@ function draw() {
     return;
   }
 
-  // Proceso asíncrono seguro: Limita el cálculo por tiempo límite para evitar colapsos
+  // Control de velocidad por tiempo seguro
   let stepsPerFrame = speedSlider.value();
-  let maxTimeMs = 12; // Máximo de ms permitidos por frame para mantener 60fps
+  let maxTimeMs = 12; 
   let frameStart = millis();
 
   for (let step = 0; step < stepsPerFrame; step++) {
@@ -391,38 +395,19 @@ function draw() {
       walkers[i].walk();
       
       if (walkers[i].checkCollision()) {
-        let newPos;
-        
-        if (random(1) < JUMP_PROBABILITY) {
-          newPos = createVector(random(width * 0.15, width * 0.85), random(height * 0.15, height * 0.85));
-        } else {
-          newPos = walkers[i].pos.copy();
-        }
-
-        addTreeParticle(newPos.x, newPos.y);
+        addTreeParticle(walkers[i].pos.x, walkers[i].pos.y);
         walkers[i] = new Walker();
       }
     }
     
-    // Si el frame se está demorando mucho, frena de manera segura y cede control a la pantalla
     if (millis() - frameStart > maxTimeMs) {
       break;
     }
   }
 
-  // Dibujar walkers activos
+  // Dibujar walkers
   for (let w of walkers) {
     w.show();
-  }
-
-  // Comprobar saturación real
-  let edgesCount = (touchedEdges.top ? 1 : 0) + 
-                   (touchedEdges.bottom ? 1 : 0) + 
-                   (touchedEdges.left ? 1 : 0) + 
-                   (touchedEdges.right ? 1 : 0);
-
-  if (edgesCount >= 3 || tree.length > 7000) {
-    resetSimulation();
   }
 }
 
@@ -448,7 +433,8 @@ function createInitialSeed(x, y) {
 }
 
 function mousePressed() {
-  if (mouseX >= 10 && mouseX <= 125 && mouseY >= 10 && mouseY <= 50) return;
+  // Ignorar clics sobre la UI (Slider y Botón)
+  if (mouseX >= 10 && mouseX <= 200 && mouseY >= 10 && mouseY <= 55) return;
   if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
 
   if (!initialSeedCreated) {
@@ -475,7 +461,7 @@ function releaseCoreAsWalkers(corePos) {
   for (let p of tree) addToGrid(p);
 }
 
-// --- CLASE WALKER ---
+// --- CLASE WALKER CON LÉVY FLIGHT ---
 class Walker {
   constructor() {
     this.spawn();
@@ -499,9 +485,24 @@ class Walker {
     this.pos = createVector(x, y);
   }
 
+  // Generación del salto con distribución de ley de potencia
+  levyStep() {
+    // Probabilidad de Ley de Potencia (Lévy Flight)
+    let r = random(1);
+    // Exponente de Lévy: Pasos mayoritariamente cortos, pero saltos gigantes muy probables
+    let stepSize = pow(1 - r, -0.4) * 1.5; 
+    
+    // Limitar longitud máxima para estabilidad
+    stepSize = min(stepSize, width * 0.4);
+
+    let step = p5.Vector.random2D();
+    step.mult(stepSize);
+    return step;
+  }
+
   walk() {
-    let vel = p5.Vector.random2D().mult(1.8);
-    this.pos.add(vel);
+    let step = this.levyStep();
+    this.pos.add(step);
 
     this.pos.x = constrain(this.pos.x, 0, width);
     this.pos.y = constrain(this.pos.y, 0, height);
@@ -569,5 +570,6 @@ function windowResized() {
   }
   resizeCanvas(w, h);
   speedSlider.position(15, 15);
+  resetButton.position(120, 15);
 }
   ``` 
