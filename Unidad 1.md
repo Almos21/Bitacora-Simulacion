@@ -7,6 +7,13 @@ Esta es la relación con la idea principal que se debia mostrar en la experienci
 ### ¿Como traduzco esto a un sistema?
 Un primer ejemplo que quiero tomar como inspiración es el juego del caos, que se realiza facilmente poniendo un punto en cualquier lado de un triangulo (por dentro o afuera) y aleatoriamente eligiendo un punto al cual se mueve 1/2 de la distancia, al final a pesar de ser algo aleaotrio termina con una imagen general.
 
-![Juego del Caos](<img width="576" height="499" alt="image" src="https://github.com/user-attachments/assets/770f82e1-cdc3-4b4f-93a4-2da8d2d2e3b8" />)
+<img width="529" height="459" alt="image" src="https://github.com/user-attachments/assets/f92c7d7f-41f2-4397-8d7a-9d52240d423a" />
 
-Esta idea me gusta mucho, el problema es que este ejemplo solo cumple con el primer momento *Posibilidad* pero no con los demás, a partir de elegir el punto de partida no hay mucho margen de alteración, si se altera el movimiento y las reglas de este sistema el resultado final no será el esperado, asi que es necesario pensar en como adaptarlo, o que tomar de el.
+
+Esta idea me gusta mucho, el problema es que este ejemplo solo cumple con el primer momento *Posibilidad* pero no con los demás, a partir de elegir el punto de partida no hay mucho margen de alteración, si se altera el movimiento y las reglas de este sistema el resultado final no será el esperado, asi que es necesario pensar en como adaptarlo, o que tomar de el. 
+
+Investigando más sobre el mismo juego encontre que si se hace con otras figuras como un cuadrado hay que definir más reglas para poder general diferentes imagenes, esto debido a que al poner este tipo de reglas los puntos empiezan a tener unas partes por la que pasan por más frecuencia u otras por las que definitivamente no lo hacen, con esto puedo cumplir con el momento de *Tendencia* y *Normalidad* pero seguimos sin la excepción y muchisimo menos con la interactividad, ya que a pesar de todo este sistema es demasiado automatizado y sin abertura hacia la intervención sin derrumbarse. Además de otro problema conceptual y es que buscamos demostrar que la aletoriedad puede dar a muchas posibilidades pero aqui a diferencia de patrones como el walker que sabemos como puede verse pero no de manera exacta en este sabemos la figura final.
+
+Ante este problema decidí recurrir a un modelo de IA para investigar sobre otros fractales aleatorios que si tuvieran espacio para la interactividad, preguntando a gemini me dio un concepto muy util que podria utilizar: el DLA
+<img width="746" height="756" alt="image" src="https://github.com/user-attachments/assets/3150955d-38a9-4b63-ab81-d79b92b3d522" />
+
