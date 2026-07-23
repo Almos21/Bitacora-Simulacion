@@ -33,6 +33,541 @@ La excepción: Existirá una probabilidad determinada de que en cierto punto una
 El usuario ya influye por el segundo momento la tendencia de la generación de las partículas, pero también podrá crear con un clic nuevos núcleos con los que puedan colisionar las partículas, esto con un máximo de 3 núcleos en totál coexistiendo para no saturar la simulación, al alcanzar el máximo y crear uno nuevo se borrará el más antiguo soltando sus partículas como nuevos walkers, esto puede que resulte dañando las formas pero solo lo sabré al probarlo.
 
 ### Ahora si nos fuimos
-Ahora es el momento de pasar esta idea a P5js, para programarlo usaré el apoyo de la IA
+Ahora es el momento de pasar esta idea a P5js, para programarlo usaré el apoyo de la IA Gemini, el promnt inicial que utilicé fue este: 
+```
+Imagina que eres alguien encargado para la construcción de una simulación en P5js utilizando el concepto de la aletoriedad y los fractales, para esto tengo este diseño:
+Un DLA, pero con las siguientes condiciones: el emisor esta constantemente apareciendo en posiciones aleatorias del borde de la pantalla, la probabilidad de aparición por cada punto de la pantalla tiende hacia donde se encuentre el cursor más cerca,
+preferiblemente usando una función de gauss o algo por el estilo, Existirá una probabilidad determinada de que en cierto punto una partícula toque la estructura pero inmediatamente salte hacia un punto lejano del cuadro, pero aun considerandose parte
+de la estructura y por ende una nueva semilla, esto causará un nuevo punto desde el cual puedan crecer las ramas, el usuario también podrá crear con un clic nuevos núcleos con los que puedan colisionar las partículas,esto con un máximo de 3 núcleos en
+totál coexistiendo para no saturar la simulación, al alcanzar el máximo y crear uno nuevo se borrará el más antiguo soltando sus partículas como nuevos walkers. Has que tenga todo un gradiente de color de azules morados y amarillos dependiendo de su
+cercania con la semilla. Entregame esto como código para p5.js con Formato 9:16, full screen y ejecución interactiva en tiempo real, la semilla primera será definida por el usuario, pero si se demora 5 segundos o más desde la ejecución del programa
+en elegir entonces lo hará en algun punto cercano al centro de la pantalla. Si crees que puede haber algun conflicto con las mecánicas o por ejemplo la parte de las ramas desapareciendo y soltando walkers puede dañar las figuras fractales me avisas.
+```
+Primer Intento:
+``` js
+let tree = [];
+let walkers = [];
+let userCores = []; // Guarda los núcleos generados por el usuario
+const MAX_USER_CORES = 3;
+const NUM_WALKERS = 200; // Cantidad de walkers simultáneos
+const STICK_DISTANCE = 8;
+const JUMP_PROBABILITY = 0.0005; // Probabilidad de saltar y crear una nueva semilla flotante
 
+let initialSeedCreated = false;
+let startTime;
+let primarySeedPos = null;
 
+function setup() {
+  // Ajuste para pantalla completa manteniendo proporción 9:16
+  let h = windowHeight;
+  let w = h * (9 / 16);
+  if (w > windowWidth) {
+    w = windowWidth;
+    h = w * (16 / 9);
+  }
+  createCanvas(w, h);
+  colorMode(HSB, 360, 255, 255, 255);
+
+  startTime = millis();
+
+  // Inicializar walkers
+  for (let i = 0; i < NUM_WALKERS; i++) {
+    walkers.push(new Walker());
+  }
+}
+
+function draw() {
+  background(10, 20, 15); // Fondo oscuro para resaltar el gradiente
+
+  // Revisa el temporizador de 5 segundos para la semilla inicial
+  if (!initialSeedCreated && millis() - startTime > 5000) {
+    createInitialSeed(width / 2 + random(-30, 30), height / 2 + random(-30, 30));
+  }
+
+  // Dibujar núcleos adicionales colocados por el usuario
+  fill(50, 255, 255, 100);
+  noStroke();
+  for (let core of userCores) {
+    ellipse(core.x, core.y, 16, 16);
+  }
+
+  // Dibujar la estructura DLA
+  for (let p of tree) {
+    drawParticle(p);
+  }
+
+  // Si aún no hay semilla, mostramos una pequeña guía visual
+  if (!initialSeedCreated) {
+    fill(0, 0, 255, 150 + sin(frameCount * 0.1) * 100);
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    text("Haz clic para colocar la semilla inicial\n(o espera 5s)", width / 2, height / 2);
+    return;
+  }
+
+  // Actualizar e iterar Walkers
+  for (let i = 0; i < walkers.length; i++) {
+    // Múltiples pasos por frame para acelerar la simulación
+    for (let step = 0; step < 4; step++) {
+      walkers[i].walk();
+      
+      // Chequear colisión con el árbol o núcleos
+      if (walkers[i].checkCollision()) {
+        // ¿Ocurre un salto cuántico / nueva semilla distante?
+        if (random(1) < JUMP_PROBABILITY) {
+          let jumpPos = createVector(random(width * 0.15, width * 0.85), random(height * 0.15, height * 0.85));
+          tree.push(new TreeParticle(jumpPos.x, jumpPos.y, getDistanceToPrimary(jumpPos)));
+        } else {
+          // Se une normalmente a la estructura
+          tree.push(new TreeParticle(walkers[i].pos.x, walkers[i].pos.y, getDistanceToPrimary(walkers[i].pos)));
+        }
+        
+        // Respawn del walker
+        walkers[i] = new Walker();
+        break;
+      }
+    }
+    walkers[i].show();
+  }
+}
+
+function getDistanceToPrimary(pos) {
+  if (!primarySeedPos) return 0;
+  return dist(pos.x, pos.y, primarySeedPos.x, primarySeedPos.y);
+}
+
+function createInitialSeed(x, y) {
+  primarySeedPos = createVector(x, y);
+  tree.push(new TreeParticle(x, y, 0));
+  initialSeedCreated = true;
+}
+
+function mousePressed() {
+  if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
+
+  if (!initialSeedCreated) {
+    createInitialSeed(mouseX, mouseY);
+  } else {
+    // Manejo del límite de 3 núcleos de usuario
+    if (userCores.length >= MAX_USER_CORES) {
+      let oldestCore = userCores.shift(); // Elimina el más antiguo
+      releaseCoreAsWalkers(oldestCore);   // Libera sus partículas
+    }
+    
+    let newCore = createVector(mouseX, mouseY);
+    userCores.push(newCore);
+    tree.push(new TreeParticle(newCore.x, newCore.y, getDistanceToPrimary(newCore)));
+  }
+}
+
+// Libera las partículas cercanas al núcleo destruido convirtiéndolas en nuevos walkers
+function releaseCoreAsWalkers(corePos) {
+  for (let i = tree.length - 1; i >= 0; i--) {
+    if (dist(tree[i].pos.x, tree[i].pos.y, corePos.x, corePos.y) < 30) {
+      let released = tree.splice(i, 1)[0];
+      // Reemplaza un walker existente con esta posición para dispersarse
+      let w = new Walker();
+      w.pos = released.pos.copy();
+      walkers[Math.floor(random(walkers.length))] = w;
+    }
+  }
+}
+
+// --- CLASE WALKER ---
+class Walker {
+  constructor() {
+    this.spawn();
+  }
+
+  spawn() {
+    // Aparece en los bordes usando distribución Gaussiana hacia la posición del Mouse
+    let side = floor(random(4));
+    let x, y;
+
+    // Generar un desplazamiento gaussiano respecto al cursor
+    let gx = randomGaussian(mouseX, width * 0.25);
+    let gy = randomGaussian(mouseY, height * 0.25);
+
+    if (side === 0) { x = random(width); y = 0; }            // Arriba
+    else if (side === 1) { x = width; y = random(height); }   // Derecha
+    else if (side === 2) { x = random(width); y = height; }  // Abajo
+    else { x = 0; y = random(height); }                      // Izquierda
+
+    // Sesgar la posición del borde según el cursor/gauss
+    if (side === 0 || side === 2) x = constrain(gx, 0, width);
+    else y = constrain(gy, 0, height);
+
+    this.pos = createVector(x, y);
+  }
+
+  walk() {
+    // Movimiento aleatorio (Browniano)
+    let vel = p5.Vector.random2D();
+    this.pos.add(vel);
+
+    // Mantener dentro del lienzo
+    this.pos.x = constrain(this.pos.x, 0, width);
+    this.pos.y = constrain(this.pos.y, 0, height);
+  }
+
+  checkCollision() {
+    // Chequea distancia contra los nodos del árbol
+    for (let i = 0; i < tree.length; i++) {
+      let d = dist(this.pos.x, this.pos.y, tree[i].pos.x, tree[i].pos.y);
+      if (d < STICK_DISTANCE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  show() {
+    stroke(255, 50);
+    strokeWeight(1.5);
+    point(this.pos.x, this.pos.y);
+  }
+}
+
+// --- CLASE ESTRUCTURA FRACTAL ---
+class TreeParticle {
+  constructor(x, y, dFromSeed) {
+    this.pos = createVector(x, y);
+    this.dist = dFromSeed;
+  }
+}
+
+function drawParticle(p) {
+  // Paleta de gradiente: Azul (200) -> Morado (280) -> Amarillo (50)
+  // Mapea la distancia desde la semilla principal
+  let maxD = width * 0.7;
+  let normD = constrain(p.dist / maxD, 0, 1);
+  
+  let hueVal;
+  if (normD < 0.5) {
+    // Mapea de Azul a Morado
+    hueVal = map(normD, 0, 0.5, 200, 280);
+  } else {
+    // Mapea de Morado a Amarillo
+    hueVal = map(normD, 0.5, 1, 280, 410) % 360; 
+  }
+
+  stroke(hueVal, 220, 255);
+  fill(hueVal, 220, 255, 150);
+  ellipse(p.pos.x, p.pos.y, 5, 5);
+}
+
+function windowResized() {
+  let h = windowHeight;
+  let w = h * (9 / 16);
+  if (w > windowWidth) {
+    w = windowWidth;
+    h = w * (16 / 9);
+  }
+  resizeCanvas(w, h);
+}
+```
+Este intento salio no tanto como esperaba, se demora bastante en llegar las partículas y son muy grandes, esto se corrige facil cambiando el tamaño de partículas y su velocidad, además de poner un slider. Como algo adicional puse que al todas las estructuras tocar los bordes o entre si se reinicie el dibujo, para no sobre saturarlo y permitir que corra por todo el tiempo de la feria.
+<img width="416" height="772" alt="image" src="https://github.com/user-attachments/assets/8016b6f2-9005-43c9-a7e2-d1e60dccb650" />
+
+##Versión Final
+  ``` js
+/* noprotect */
+
+let tree = [];
+let walkers = [];
+let userCores = [];
+const MAX_USER_CORES = 3;
+const NUM_WALKERS = 180; 
+const STICK_DISTANCE = 4.5; 
+const JUMP_PROBABILITY = 0.0003; 
+
+// Grilla espacial de optimización O(1)
+const GRID_SIZE = 12; 
+let grid = {};
+
+let initialSeedCreated = false;
+let startTime;
+let primarySeedPos = null;
+let speedSlider;
+
+// Seguidor de bordes para saturación
+let touchedEdges = { top: false, bottom: false, left: false, right: false };
+
+function setup() {
+  let h = windowHeight;
+  let w = h * (9 / 16);
+  if (w > windowWidth) {
+    w = windowWidth;
+    h = w * (16 / 9);
+  }
+  createCanvas(w, h);
+  colorMode(HSB, 360, 255, 255, 255);
+
+  speedSlider = createSlider(1, 30, 8, 1);
+  speedSlider.position(15, 15);
+  speedSlider.style('width', '100px');
+  speedSlider.style('opacity', '0.7');
+
+  resetSimulation();
+}
+
+function resetSimulation() {
+  tree = [];
+  walkers = [];
+  userCores = [];
+  grid = {};
+  touchedEdges = { top: false, bottom: false, left: false, right: false };
+  initialSeedCreated = false;
+  primarySeedPos = null;
+  startTime = millis();
+
+  for (let i = 0; i < NUM_WALKERS; i++) {
+    walkers.push(new Walker());
+  }
+}
+
+function getGridKey(x, y) {
+  let gx = Math.floor(x / GRID_SIZE);
+  let gy = Math.floor(y / GRID_SIZE);
+  return gx + "," + gy;
+}
+
+function addToGrid(particle) {
+  let key = getGridKey(particle.pos.x, particle.pos.y);
+  if (!grid[key]) grid[key] = [];
+  grid[key].push(particle);
+}
+
+function addTreeParticle(x, y) {
+  let p = new TreeParticle(x, y, getDistanceToPrimary(createVector(x, y)));
+  tree.push(p);
+  addToGrid(p);
+
+  // Mapear saturación de bordes
+  if (x <= 6) touchedEdges.left = true;
+  if (x >= width - 6) touchedEdges.right = true;
+  if (y <= 6) touchedEdges.top = true;
+  if (y >= height - 6) touchedEdges.bottom = true;
+
+  return p;
+}
+
+function draw() {
+  background(10, 20, 15);
+
+  drawUI();
+
+  if (!initialSeedCreated && millis() - startTime > 5000) {
+    createInitialSeed(width / 2 + random(-20, 20), height / 2 + random(-20, 20));
+  }
+
+  // Dibujar núcleos del usuario
+  fill(50, 255, 255, 120);
+  noStroke();
+  for (let core of userCores) {
+    ellipse(core.x, core.y, 10, 10);
+  }
+
+  // Dibujar estructura fractal
+  for (let p of tree) {
+    drawParticle(p);
+  }
+
+  if (!initialSeedCreated) {
+    fill(0, 0, 255, 150 + sin(frameCount * 0.1) * 100);
+    textAlign(CENTER, CENTER);
+    textSize(13);
+    text("Haz clic para colocar la semilla inicial\n(o espera 5s)", width / 2, height / 2);
+    return;
+  }
+
+  // Proceso asíncrono seguro: Limita el cálculo por tiempo límite para evitar colapsos
+  let stepsPerFrame = speedSlider.value();
+  let maxTimeMs = 12; // Máximo de ms permitidos por frame para mantener 60fps
+  let frameStart = millis();
+
+  for (let step = 0; step < stepsPerFrame; step++) {
+    for (let i = 0; i < walkers.length; i++) {
+      walkers[i].walk();
+      
+      if (walkers[i].checkCollision()) {
+        let newPos;
+        
+        if (random(1) < JUMP_PROBABILITY) {
+          newPos = createVector(random(width * 0.15, width * 0.85), random(height * 0.15, height * 0.85));
+        } else {
+          newPos = walkers[i].pos.copy();
+        }
+
+        addTreeParticle(newPos.x, newPos.y);
+        walkers[i] = new Walker();
+      }
+    }
+    
+    // Si el frame se está demorando mucho, frena de manera segura y cede control a la pantalla
+    if (millis() - frameStart > maxTimeMs) {
+      break;
+    }
+  }
+
+  // Dibujar walkers activos
+  for (let w of walkers) {
+    w.show();
+  }
+
+  // Comprobar saturación real
+  let edgesCount = (touchedEdges.top ? 1 : 0) + 
+                   (touchedEdges.bottom ? 1 : 0) + 
+                   (touchedEdges.left ? 1 : 0) + 
+                   (touchedEdges.right ? 1 : 0);
+
+  if (edgesCount >= 3 || tree.length > 7000) {
+    resetSimulation();
+  }
+}
+
+function drawUI() {
+  push();
+  fill(0, 0, 255, 200);
+  noStroke();
+  textSize(11);
+  textAlign(LEFT, TOP);
+  text("Velocidad: " + speedSlider.value() + "x", 15, 33);
+  pop();
+}
+
+function getDistanceToPrimary(pos) {
+  if (!primarySeedPos) return 0;
+  return dist(pos.x, pos.y, primarySeedPos.x, primarySeedPos.y);
+}
+
+function createInitialSeed(x, y) {
+  primarySeedPos = createVector(x, y);
+  addTreeParticle(x, y);
+  initialSeedCreated = true;
+}
+
+function mousePressed() {
+  if (mouseX >= 10 && mouseX <= 125 && mouseY >= 10 && mouseY <= 50) return;
+  if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
+
+  if (!initialSeedCreated) {
+    createInitialSeed(mouseX, mouseY);
+  } else {
+    if (userCores.length >= MAX_USER_CORES) {
+      let oldestCore = userCores.shift();
+      releaseCoreAsWalkers(oldestCore);
+    }
+    
+    let newCore = createVector(mouseX, mouseY);
+    userCores.push(newCore);
+    addTreeParticle(newCore.x, newCore.y);
+  }
+}
+
+function releaseCoreAsWalkers(corePos) {
+  for (let i = tree.length - 1; i >= 0; i--) {
+    if (dist(tree[i].pos.x, tree[i].pos.y, corePos.x, corePos.y) < 20) {
+      tree.splice(i, 1);
+    }
+  }
+  grid = {};
+  for (let p of tree) addToGrid(p);
+}
+
+// --- CLASE WALKER ---
+class Walker {
+  constructor() {
+    this.spawn();
+  }
+
+  spawn() {
+    let side = floor(random(4));
+    let x, y;
+
+    let gx = randomGaussian(mouseX, width * 0.2);
+    let gy = randomGaussian(mouseY, height * 0.2);
+
+    if (side === 0) { x = random(width); y = 0; }
+    else if (side === 1) { x = width; y = random(height); }
+    else if (side === 2) { x = random(width); y = height; }
+    else { x = 0; y = random(height); }
+
+    if (side === 0 || side === 2) x = constrain(gx, 0, width);
+    else y = constrain(gy, 0, height);
+
+    this.pos = createVector(x, y);
+  }
+
+  walk() {
+    let vel = p5.Vector.random2D().mult(1.8);
+    this.pos.add(vel);
+
+    this.pos.x = constrain(this.pos.x, 0, width);
+    this.pos.y = constrain(this.pos.y, 0, height);
+  }
+
+  checkCollision() {
+    let gx = Math.floor(this.pos.x / GRID_SIZE);
+    let gy = Math.floor(this.pos.y / GRID_SIZE);
+
+    for (let x = -1; x <= 1; x++) {
+      for (let y = -1; y <= 1; y++) {
+        let key = (gx + x) + "," + (gy + y);
+        let neighbors = grid[key];
+        
+        if (neighbors) {
+          for (let i = 0; i < neighbors.length; i++) {
+            let d = dist(this.pos.x, this.pos.y, neighbors[i].pos.x, neighbors[i].pos.y);
+            if (d < STICK_DISTANCE) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  show() {
+    stroke(255, 40);
+    strokeWeight(1);
+    point(this.pos.x, this.pos.y);
+  }
+}
+
+// --- CLASE ESTRUCTURA Y DIBUJO ---
+class TreeParticle {
+  constructor(x, y, dFromSeed) {
+    this.pos = createVector(x, y);
+    this.dist = dFromSeed;
+  }
+}
+
+function drawParticle(p) {
+  let maxD = width * 0.65;
+  let normD = constrain(p.dist / maxD, 0, 1);
+  
+  let hueVal;
+  if (normD < 0.5) {
+    hueVal = map(normD, 0, 0.5, 200, 280); 
+  } else {
+    hueVal = map(normD, 0.5, 1, 280, 410) % 360; 
+  }
+
+  stroke(hueVal, 220, 255, 200);
+  fill(hueVal, 220, 255, 180);
+  ellipse(p.pos.x, p.pos.y, 3, 3);
+}
+
+function windowResized() {
+  let h = windowHeight;
+  let w = h * (9 / 16);
+  if (w > windowWidth) {
+    w = windowWidth;
+    h = w * (16 / 9);
+  }
+  resizeCanvas(w, h);
+  speedSlider.position(15, 15);
+}
+  ``` 
