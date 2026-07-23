@@ -19,7 +19,7 @@ Ante este problema decidí recurrir a un modelo de IA para investigar sobre otro
 
 Con la idea danda por gemini tengo un terreno muy solido sobre el cual actuar y podria directamente pedirle esto mismo, pero senti que queria ver que más podria aprovechar de este concepto ya que igual este no complia con Tendencia (si con normalidad al estas acomularse cerca de los puntos deseados). Para esto entendi bien el funcionamiento del DLA: Se sueltan partículas invisibles para el espectador desde algun emisor y desde alli realizan algun tipo de caminata definida por algun patrón y al chocar con la semilla o alguna particula conectada a esta o a la estructura general se detienen y se vuelven visibles al espectador, esto termina generando el patron mostrado:
 <img width="250" height="223" alt="image" src="https://github.com/user-attachments/assets/661251fd-5ac6-4346-a1dd-edd2137c657c" />
-
+<a name="1"></a>
 Ahora, para hacerlo más interesante y cumplir con los momentos realizaré varias modificaciones con ayuda también de lo propuesto por gemini: 
 #### Primer momento:
 La probabilidad ya esta simulación desde un inicio, pero la aplicare también en el emisor, será aleatorio de donde surgen las partículas pero moviendose siempre por el borde de la pantalla.
@@ -266,7 +266,8 @@ function windowResized() {
   resizeCanvas(w, h);
 }
 ```
-Este intento salio no tanto como esperaba, se demora bastante en llegar las partículas y son muy grandes, esto se corrige facil cambiando el tamaño de partículas y su velocidad, además de poner un slider.
+<a name="3"></a>
+Este intento salio no tanto como esperaba, se demora bastante en llegar las partículas y son muy grandes, esto se corrige facil cambiando el tamaño de partículas y su velocidad, además de poner un slider. También hubo que cuadrar cosas como el hecho de al llegar al borde se formaba una especie de barrera y no dejaba generar más, esto se solucionó volviendo más fuerte la distribución gaussiana y haciendo que si las particulas identificaban el lygar de salida como uno ocupado por otra rama entonces no salian por allí.
 <img width="416" height="772" alt="image" src="https://github.com/user-attachments/assets/8016b6f2-9005-43c9-a7e2-d1e60dccb650" />
 
 ##Versión Final
@@ -279,6 +280,9 @@ let userCores = [];
 const MAX_USER_CORES = 3;
 const NUM_WALKERS = 180; 
 const STICK_DISTANCE = 4.5; 
+
+// Probabilidad RARA de salto de Lévy al colisionar (0.5%)
+const LEVY_SEED_PROBABILITY = 0.005; 
 
 // Grilla espacial de optimización
 const GRID_SIZE = 12; 
@@ -365,7 +369,7 @@ function draw() {
     createInitialSeed(width / 2 + random(-20, 20), height / 2 + random(-20, 20));
   }
 
-  // Dibujar núcleos adicionales
+  // Dibujar núcleos del usuario
   fill(50, 255, 255, 120);
   noStroke();
   for (let core of userCores) {
@@ -385,7 +389,7 @@ function draw() {
     return;
   }
 
-  // Control de velocidad por tiempo seguro
+  // Control de velocidad asíncrono
   let stepsPerFrame = speedSlider.value();
   let maxTimeMs = 12; 
   let frameStart = millis();
@@ -395,7 +399,22 @@ function draw() {
       walkers[i].walk();
       
       if (walkers[i].checkCollision()) {
-        addTreeParticle(walkers[i].pos.x, walkers[i].pos.y);
+        
+        // Vuelo de Lévy / Salto Raro al colisionar
+        if (random(1) < LEVY_SEED_PROBABILITY) {
+          let jumpAngle = random(TWO_PI);
+          let jumpDist = pow(1 - random(0.99), -0.5) * 30; 
+          jumpDist = constrain(jumpDist, width * 0.2, width * 0.45);
+
+          let newX = constrain(walkers[i].pos.x + cos(jumpAngle) * jumpDist, 10, width - 10);
+          let newY = constrain(walkers[i].pos.y + sin(jumpAngle) * jumpDist, 10, height - 10);
+
+          addTreeParticle(newX, newY);
+        } else {
+          addTreeParticle(walkers[i].pos.x, walkers[i].pos.y);
+        }
+
+        // Reaparecer walker en un borde despejado
         walkers[i] = new Walker();
       }
     }
@@ -433,7 +452,6 @@ function createInitialSeed(x, y) {
 }
 
 function mousePressed() {
-  // Ignorar clics sobre la UI (Slider y Botón)
   if (mouseX >= 10 && mouseX <= 200 && mouseY >= 10 && mouseY <= 55) return;
   if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
 
@@ -461,51 +479,49 @@ function releaseCoreAsWalkers(corePos) {
   for (let p of tree) addToGrid(p);
 }
 
-// --- CLASE WALKER CON LÉVY FLIGHT ---
+// --- CLASE WALKER ---
 class Walker {
   constructor() {
     this.spawn();
   }
 
   spawn() {
-    let side = floor(random(4));
+    let validSpawn = false;
+    let attempts = 0;
     let x, y;
 
-    let gx = randomGaussian(mouseX, width * 0.2);
-    let gy = randomGaussian(mouseY, height * 0.2);
+    // Intenta encontrar un punto del borde que NO esté bloqueado por ramas
+    while (!validSpawn && attempts < 10) {
+      attempts++;
+      let side = floor(random(4));
 
-    if (side === 0) { x = random(width); y = 0; }
-    else if (side === 1) { x = width; y = random(height); }
-    else if (side === 2) { x = random(width); y = height; }
-    else { x = 0; y = random(height); }
+      let gx = randomGaussian(mouseX, width * 0.18);
+      let gy = randomGaussian(mouseY, height * 0.18);
 
-    if (side === 0 || side === 2) x = constrain(gx, 0, width);
-    else y = constrain(gy, 0, height);
+      if (side === 0) { x = random(width); y = 0; }
+      else if (side === 1) { x = width; y = random(height); }
+      else if (side === 2) { x = random(width); y = height; }
+      else { x = 0; y = random(height); }
 
-    this.pos = createVector(x, y);
-  }
+      if (side === 0 || side === 2) x = constrain(gx, 0, width);
+      else y = constrain(gy, 0, height);
 
-  // Generación del salto con distribución de ley de potencia
-  levyStep() {
-    // Probabilidad de Ley de Potencia (Lévy Flight)
-    let r = random(1);
-    // Exponente de Lévy: Pasos mayoritariamente cortos, pero saltos gigantes muy probables
-    let stepSize = pow(1 - r, -0.4) * 1.5; 
-    
-    // Limitar longitud máxima para estabilidad
-    stepSize = min(stepSize, width * 0.4);
+      this.pos = createVector(x, y);
 
-    let step = p5.Vector.random2D();
-    step.mult(stepSize);
-    return step;
+      // Si el punto de nacimiento no colisiona con el árbol, se valida
+      if (!this.checkCollision()) {
+        validSpawn = true;
+      }
+    }
   }
 
   walk() {
-    let step = this.levyStep();
+    // Paso aleatorio fino
+    let step = p5.Vector.random2D().mult(1.8);
     this.pos.add(step);
 
-    this.pos.x = constrain(this.pos.x, 0, width);
-    this.pos.y = constrain(this.pos.y, 0, height);
+    this.pos.x = constrain(this.pos.x, 2, width - 2);
+    this.pos.y = constrain(this.pos.y, 2, height - 2);
   }
 
   checkCollision() {
@@ -572,4 +588,15 @@ function windowResized() {
   speedSlider.position(15, 15);
   resetButton.position(120, 15);
 }
-  ``` 
+  ```
+<img width="1412" height="780" alt="image" src="https://github.com/user-attachments/assets/45ef9bf0-8e39-4317-aff6-7dd6851805f3" />
+<a name="2"></a>
+### Autoevaluación:
+
+| Criterio | Cumplo | No cumplo | Evidencia |
+|----------|:-------:|:---------:|-----------|
+| Encargo completo: interpreto los cinco momentos dentro de un mismo sistema visual. | ◼ | ☐ | |
+| Simulación con intención: utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | ◼ | ☐ | [Evidencia](#1)) |
+| Interacción significativa: la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | ◼ | ☐ |[Evidencia](#1) |
+| Prototipo funcional: la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | ◼ | ☐ |[Evidencia](#2) |
+| Proceso documentado: la bitácora evidencia avances, decisiones, dificultades, soluciones, uso de IA y enlace al prototipo. | ◼ | ☐ |[Evidencia](#3) |
