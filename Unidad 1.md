@@ -20,4 +20,19 @@ Ante este problema decidí recurrir a un modelo de IA para investigar sobre otro
 Con la idea danda por gemini tengo un terreno muy solido sobre el cual actuar y podria directamente pedirle esto mismo, pero senti que queria ver que más podria aprovechar de este concepto ya que igual este no complia con Tendencia (si con normalidad al estas acomularse cerca de los puntos deseados). Para esto entendi bien el funcionamiento del DLA: Se sueltan partículas invisibles para el espectador desde algun emisor y desde alli realizan algun tipo de caminata definida por algun patrón y al chocar con la semilla o alguna particula conectada a esta o a la estructura general se detienen y se vuelven visibles al espectador, esto termina generando el patron mostrado:
 <img width="250" height="223" alt="image" src="https://github.com/user-attachments/assets/661251fd-5ac6-4346-a1dd-edd2137c657c" />
 
+Ahora, para hacerlo más interesante y cumplir con los momentos realizaré varias modificaciones con ayuda también de lo propuesto por gemini: 
+#### Primer momento:
+La probabilidad ya esta simulación desde un inicio, pero la aplicare también en el emisor, será aleatorio de donde surgen las partículas pero moviendose siempre por el borde de la pantalla.
+#### Segundo momento:
+Ahora, la tendencia, ya hice que el emisor sea aleatorio pero quiero hacer que las partículas tiendan hacia algún punto, lo que haré es que la posición del emisor tienda hacia el cursor (desde aqui ya entrando un poco en la última etapa).
+#### Tercer momento: 
+La normalidad ya se ve en la naturaleza de la simulación, la figura se normaliza solo desde el centro hacia las ramas no existe por fuera de esto.
+#### Cuarto momento: 
+La excepción: Existirá una probabilidad determinada de que en cierto punto una partícula toque la estructura pero inmediatamente salte hacia un punto lejano del cuadro, pero aun considerandose parte de la estructura y por ende una nueva semilla, esto causará un nuevo punto desde el cual puedan crecer las ramas.
+#### Quinto momento: 
+El usuario ya influye por el segundo momento la tendencia de la generación de las partículas, pero también podrá crear con un clic nuevos núcleos con los que puedan colisionar las partículas, esto con un máximo de 3 núcleos en totál coexistiendo para no saturar la simulación, al alcanzar el máximo y crear uno nuevo se borrará el más antiguo soltando sus partículas como nuevos walkers, esto puede que resulte dañando las formas pero solo lo sabré al probarlo.
+
+### Ahora si nos fuimos
+Ahora es el momento de pasar esta idea a P5js, para programarlo usaré el apoyo de la IA
+
 
