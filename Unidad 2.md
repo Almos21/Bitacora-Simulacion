@@ -2,7 +2,7 @@
 ### Conceptualización:
 
 ### Autoevaluación:
-
+(aun no aplica es solo que pegué la que hice en el anterior para tener el formato)
 | Criterio | Cumplo | No cumplo | Evidencia |
 |----------|:-------:|:---------:|-----------|
 | Encargo completo: interpreto los cinco momentos dentro de un mismo sistema visual. | ◼ | ☐ | [Evidencia](#1)|
