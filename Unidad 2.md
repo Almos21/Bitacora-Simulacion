@@ -40,7 +40,7 @@ Atracción 0.7 radio 60 px
 - Voracidad → Propagación
 Atracción 1.0 radio 140 px
 - Propagación → Voracidad
-Repulsión 1.2 radio 130 px
+Repulsión 1 radio 130 px
 
 #### Distancias de interacción:
 - Detección
@@ -79,7 +79,7 @@ Sociales, tres colonias grandes.
 
 Voracidad, dos individuos aislados.
 
-Así los enjambres tienen tiempo para crecer antes de aparecer la cacería.
+Estas decisiones permiten que haya un tiempo para que el enjambre se genere sin ser devorados aún.
 
 #### Parámetros constantes
 Masa
@@ -107,11 +107,18 @@ Depende de la energía, comida y la cantidad de partículas de propagación
 Si Voracidad está cerca la huida aumenta.
 
 ##### Densidad del enjambre
-Si hay muchas partículas sociales su cohesión aumenta y si hay pocas su alienación disminuye, de esta manera el grupo empieza a romperse.
+Si hay muchas partículas sociales su cohesión aumenta y si hay pocas su alienación disminuye, esto lo seleccioné porque de esta manera el grupo empieza a romperse.
 
-#### Apariencia e interación:
-Vida: puntos verdes que pulsan lentamente para indicar regeneración.
-Propagación: amarillo o cian brillante; cuando están listas para dividirse emiten un halo que aumenta de intensidad.
+#### Apariencia e interacción:
+- Vida: puntos verdes que pulsan lentamente para indicar regeneración.
+- Propagación: amarillo (sociales) o cian brillante (nómadas); cuando están listas para dividirse emiten un halo que aumenta de intensidad.
+- Voracidad: rojo o púrpura; su tamaño o brillo crece con el nivel de hambre y dejan una estela al perseguir
+
+- Vida + Propagación: la partícula de Vida desaparece y la de Propagación aumenta ligeramente de tamaño antes de volver a su tamaño normal.
+- Voracidad + Propagación: la Propagación es consumida y la Voracidad incrementa temporalmente su brillo y velocidad.
+
+### Registro de pruebas
+En base al sistema ya planteado usaré el agente de IA Claude para la programación, explicándole todo el sistema.
 
 ### Autoevaluación:
 (aun no aplica es solo que pegué la que hice en el anterior para tener el formato)
