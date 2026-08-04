@@ -37,40 +37,55 @@ Propagación Social: 60 Empieza con menos individuos porque su ventaja no está 
 #### Intensidad y alcance de cada relación:
 Manejándolo como una escala de 0 a 1
 - Vida → Propagación
+
 Atracción 0.8 radio 80 px
 - Propagación Social → Propagación Social
+  
 Atracción 0.7 radio 60 px
 - Voracidad → Propagación
+  
 Atracción 1.0 radio 140 px
 - Propagación → Voracidad
+  
 Repulsión 1 radio 130 px
 
 #### Distancias de interacción:
 - Detección
+
 150 px
 Lo suficiente para ver gran cantidad de distancia cerca y que no se pierdan
 - Influencia
+
 80 px
 Empieza a afectar de verdad
 - Contacto
+
 8 px
 Lo suficiente para detectar y actuar respecto a esto
 <a name="2"></a>
 #### Fricción y velocidad máxima
 - Vida
+
 Fricción: 0.97
+
 Velocidad máxima: 0.2
 
 - Voracidad
+
 Fricción: 0.86
+
 Velocidad máxima: 3.4
 
 - Prop. Nómada, deben sentirse nerviosas
+
 Fricción: 0.82
+
 Velocidad máxima: 4.0
 
 - Prop. Social, deben verse coordinadas
+
 Fricción: 0.89
+
 Velocidad máxima: 2.1
 
 #### Distribución inicial:
@@ -135,6 +150,7 @@ Esta fue la versión final después de tener que hacer unos cambios, debido a qu
 
 <img width="874" height="808" alt="image" src="https://github.com/user-attachments/assets/a8a591f9-ea14-44a2-b82b-26be0d4d2827" />
 <a name="1"></a>
+
 ### Diferentes manifestaciones:
 50 nómadas y solo 2 Voracidad, pero con 5 de velocidad, en esta la propagación logró establecer mejor sus poblaciones
 <a name="3"></a>
