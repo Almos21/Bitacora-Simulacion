@@ -1,5 +1,13 @@
 ## Unidad 2
 ### Conceptualización:
+Quiero explorar la tensión entre la propagación y la voracidad
+Esta idea de tensión me surgió inspirandome en las deidades del juego Honkai Star Rail, llamadas Eones, estas representan cada una un concepto y hay dos opuestas llamadas Voracidad y Propagación. La propagación busca nunca estar sola y se multiplica de manera inmensa y descontrolada, y la voracidad nunca deja de tener hambre por lo que devora insasiablemente la plaga de la propagación, quien intenta sobrevivir y esparcice constantemente.
+<img width="1200" height="1200" alt="image" src="https://github.com/user-attachments/assets/56ccfa60-6244-4f77-81c6-54de189d376a" />
+<img width="2048" height="2048" alt="image" src="https://github.com/user-attachments/assets/5706f2fa-5cd1-4ba9-8394-58c595bde20d" />
+
+### Definiciones:
+Tipos de partículas:
+
 
 ### Autoevaluación:
 (aun no aplica es solo que pegué la que hice en el anterior para tener el formato)
