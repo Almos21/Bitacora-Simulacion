@@ -818,10 +818,9 @@ function updateHUD(){
 </html>
 ```
 ### Autoevaluación:
-(aun no aplica es solo que pegué la que hice en el anterior para tener el formato)
-| Criterio | Cumplo | No cumplo | Evidencia |
+| Criterio | Peso | Valoración | Aporte |
 |----------|:-------:|:---------:|-----------|
-| Encargo completo: interpreto los cinco momentos dentro de un mismo sistema visual. | ◼ | ☐ | [Evidencia](#1)|
+| La intención es clara y perceptible en el comportamiento. | 20% |  | [Evidencia](#1)|
 | Simulación con intención: utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | ◼ | ☐ | [Evidencia](#1) |
 | Interacción significativa: la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | ◼ | ☐ |[Evidencia](#1) |
 | Prototipo funcional: la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | ◼ | ☐ |[Evidencia](#2) |
