@@ -820,8 +820,11 @@ function updateHUD(){
 ### Autoevaluación:
 | Criterio | Peso | Valoración | Aporte |
 |----------|:-------:|:---------:|-----------|
-| La intención es clara y perceptible en el comportamiento. | 20% |  | [Evidencia](#1)|
-| Simulación con intención: utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | ◼ | ☐ | [Evidencia](#1) |
-| Interacción significativa: la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | ◼ | ☐ |[Evidencia](#1) |
-| Prototipo funcional: la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | ◼ | ☐ |[Evidencia](#2) |
-| Proceso documentado: la bitácora evidencia avances, decisiones, dificultades, soluciones, uso de IA y enlace al prototipo. | ◼ | ☐ |[Evidencia](#3) |
+| La intención es clara y perceptible en el comportamiento. | 20% | 5 | [Evidencia](#1)|
+| Los tipos, cantidades, matriz y parámetros están justificados desde la intención. | 25% | 5 | [Evidencia](#1) |
+| Comprendo y puedo modificar el funcionamiento técnico del sistema. | 20 | 5 |[Evidencia](#1) |
+| El sistema produce variaciones con una identidad reconocible. | 15% | 5 |[Evidencia](#2) |
+| Experimenté, comparé, seleccioné y descarté con criterios claros. | 10% | 5 |[Evidencia](#3) |
+| Puedo distinguir y sustentar lo diseñado y lo emergente. | 10% | 5 | |
+
+Total: 
