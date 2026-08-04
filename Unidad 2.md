@@ -55,7 +55,7 @@ Empieza a afectar de verdad
 - Contacto
 8 px
 Lo suficiente para detectar y actuar respecto a esto
-
+<a name="2"></a>
 #### Fricción y velocidad máxima
 - Vida
 Fricción: 0.97
@@ -123,22 +123,21 @@ Si hay muchas partículas sociales su cohesión aumenta y si hay pocas su aliena
 ### Registro de pruebas
 En base al sistema ya planteado usaré el agente de IA Claude para la programación, explicándole todo el sistema.
 
-En la primera prueba ocurrió lo siguiente, empezó con muchas pero siempre terminaban muy pocas, no llevaban a patrones o movimientos interesantes y terminaba en una simulación muy simple 
-
+En la primera prueba ocurrió lo siguiente, empezó con muchas pero siempre terminaban muy pocas, no llevaban a patrones o movimientos interesantes y terminaba en una simulación muy simple, por lo que busque cambiar el como se equilibraba la simulación
+<a name="4"></a>
 <img width="932" height="947" alt="image" src="https://github.com/user-attachments/assets/6ce4aa1e-b2de-4d0d-9a11-39fa924b19c3" />
 
-Un segundo cambio donde se configuró la población de la voracidad, crecimiento de la población y cuadrar los patrones sociales, resultaba en esto donde se juntaban los sociales y los nómadas eran lo que terminaban formando cúmulos
-
+Un segundo cambio donde se configuró la población de la voracidad, crecimiento de la población y  los patrones sociales, resultaba en esto donde se juntaban los sociales en un solo punto y los nómadas eran lo que terminaban formando cúmulos, solo era poner bien las distancias ya establecidas entre los mismos sociales y variar los parámetros de los nómadas y evitar que se juntaran tanto.
 
 <img width="878" height="818" alt="image" src="https://github.com/user-attachments/assets/f58c124b-cf45-408a-8ae9-bd5774040c23" />
 
 Esta fue la versión final después de tener que hacer unos cambios, debido a que la voracidad comía sin control siempre terminaba ganando sobre la población, para esto se le puso varias reglas, ahora tiene una saciedad y si pasa un tiempo sin comer muere
 
 <img width="874" height="808" alt="image" src="https://github.com/user-attachments/assets/a8a591f9-ea14-44a2-b82b-26be0d4d2827" />
-
+<a name="1"></a>
 ### Diferentes manifestaciones:
 50 nómadas y solo 2 Voracidad, pero con 5 de velocidad, en esta la propagación logró establecer mejor sus poblaciones
-
+<a name="3"></a>
 <img width="875" height="814" alt="image" src="https://github.com/user-attachments/assets/e9beff4a-a2b4-4049-bd47-89e8c2101377" />
 
 200 nómadas y más velocidad, además 600 de comida inicial, los nómadas la devoran enseguida y dominan el lugar
@@ -818,13 +817,14 @@ function updateHUD(){
 </html>
 ```
 ### Autoevaluación:
-| Criterio | Peso | Valoración | Aporte |
-|----------|:-------:|:---------:|-----------|
-| La intención es clara y perceptible en el comportamiento. | 20% | 5 | [Evidencia](#1)|
-| Los tipos, cantidades, matriz y parámetros están justificados desde la intención. | 25% | 5 | [Evidencia](#1) |
-| Comprendo y puedo modificar el funcionamiento técnico del sistema. | 20 | 5 |[Evidencia](#1) |
-| El sistema produce variaciones con una identidad reconocible. | 15% | 5 |[Evidencia](#2) |
-| Experimenté, comparé, seleccioné y descarté con criterios claros. | 10% | 5 |[Evidencia](#3) |
-| Puedo distinguir y sustentar lo diseñado y lo emergente. | 10% | 5 | |
+| Criterio | Peso | Valoración | Aporte | Evidencia|
+|----------|:-------:|:---------:|:---------:|-----------|
+| La intención es clara y perceptible en el comportamiento. | 20% | 100% | 20 | [Se puede ver en las evidencias como la intención es clara, se evidencia la dinámica de la propagación y sus distintos tipos ante la caza de la voracidad](#1)|
+| Los tipos, cantidades, matriz y parámetros están justificados desde la intención. | 25% | 90% | 22.5 | [Justifiqué el porqué de la mayoría de los parámetros, algunos están sin explicar porque estaban bien así, sin embargo son pocos](#2) |
+| Comprendo y puedo modificar el funcionamiento técnico del sistema. | 20% | 80% | 16 | [Evidencia](#3) |
+| El sistema produce variaciones con una identidad reconocible. | 15% | 100% | 15 | [Evidencia](#3) |
+| Experimenté, comparé, seleccioné y descarté con criterios claros. | 10% | 90% | 9 | [Se pudo ver como cambié entre versiones, tenia claro que fallaba y sabia por donde podía ir para arreglarlo ayudándome de la IA](#4) |
+| Puedo distinguir y sustentar lo diseñado y lo emergente. | 10% | 100% | 10 | [Evidencia](#3) |
 
-Total: 
+Total: 4.62
+
