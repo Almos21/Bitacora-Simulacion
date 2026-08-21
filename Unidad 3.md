@@ -1,12 +1,15 @@
 # Unidad 3
 
-Instrumento funcional
-
+## Instrumento funcional
+[Link a instrumento](https://almos21.github.io/test-sim/)
 Mapa del sistema
 
 ## Ficha de fuerzas
 
-La primera fuerza que decidí probar fue aplicar ondas que me ayudaran a simular el beat y un movimiento oscilante que va dandole vida a las partículas, la ecuación que ordena esta fuerza es: $$F_{onda} = \hat{r} \cdot A \cdot \sin(k \cdot d - \omega \cdot t) \cdot L$$
+### Ondas
+La primera fuerza que decidí probar fue aplicar ondas que me ayudaran a simular el beat y un movimiento oscilante que va dándole vida a las partículas, la ecuación que ordena esta fuerza es: 
+
+$$F_{onda} = \hat{r} \cdot A \cdot \sin(k \cdot d - \omega \cdot t) \cdot L$$
 
 Donde: $\hat{r}$ (Dirección): Vector normalizado desde la partícula hacia el cursor. 
 
@@ -18,6 +21,13 @@ $\omega$ (Velocidad): Qué tan rápido se desplaza la onda en el tiempo ($t$).
 
 $L$ (Límite): Un multiplicador binario (1 o 0) que anula la fuerza si la distancia supera el radio máximo estipulado.
 
+### Disparo
+Para este me base en la repulsión base que de por si tiene particle life, pero enfocandolo desde el mouse, queda así:
+
+$$v_{nueva} = v_{actual} + (\text{Fuerza} \times \text{Dirección} \times \Delta t)$$
+
+la intención con esta fuerza fue crear líneas interesantes en medio 
+
 | Prueba | Fuerzas activas | Condición inicial | Predicción |
 |---|---|---|---|
 | Inercia | ninguna | velocidad ≠ 0 | movimiento sin aceleración deliberada |
@@ -26,7 +36,7 @@ $L$ (Límite): Un multiplicador binario (1 o 0) que anula la fuerza si la distan
 | Repulsión | radial - | velocidad = 0 | aceleración alejándose |
 | Vórtice | radial suave + tangencial | velocidad = 0 | aparece giro, no solo caída radial |
 
-La segunda fuerza es una de repulsión
+
 
 ## Registro de pruebas
 ### Ondas
