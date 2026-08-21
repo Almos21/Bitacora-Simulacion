@@ -1,11 +1,12 @@
 # Unidad 3
-
+<a name="6"></a>
 ## Instrumento funcional
 [Link a instrumento](https://almos21.github.io/test-sim/)
-Mapa del sistema
 
+## Mapa del sistema
+<a name="2"></a>
 ## Ficha de fuerzas
-
+<a name="1"></a>
 ### Ondas
 La primera fuerza que decidí probar fue aplicar ondas que me ayudaran a simular el beat y un movimiento oscilante que va dándole vida a las partículas, la ecuación que ordena esta fuerza es: 
 
@@ -38,6 +39,7 @@ Para esta fuerza tenia pensado hacer que partículas subieran y otras bajara y d
 | Gravedad Doble | Gravedad | velocidad = 0 | caen o se alzan dependiendo de cual dirección se les asignó |
 
 ## Registro de pruebas
+<a name="3"></a>
 ### Ondas
 El resultado esperado para las ondas es que generen una sensación de beat o "latido" en las partículas mientras a la vez forma un patrón base que se alterará después, el primer intento con la IA dio este resultado:
 
@@ -69,7 +71,7 @@ Pero decidí no desecharlo todo, porque me interesó mucho los interesantes patr
 <img width="390" height="451" alt="image" src="https://github.com/user-attachments/assets/5eb2a7d6-a5dd-493c-912f-75fd91e2ea91" />
 <img width="838" height="600" alt="image" src="https://github.com/user-attachments/assets/87c2bee0-b883-4293-b690-5e7a7dc156f1" />
 
-El ultimo paso fue poder relacionar todo con teclas para poder interpretar las visuales en vivo, para esto decidí asignar a cada fuerza un número, al apretarlo se apagan o prenden y de paso si dejo presionada alguna letra desde la "q" hacia la derecha y las flechas del teclado modifica los parámetros de la ultima fuerza elegida, entonces por ejemplo si apreto 4 seleciono la de ondas y si dejo apretada la q puedo aumentar o rebajar su fuerza con las flechas del teclado.
+El ultimo paso fue poder relacionar todo con teclas para poder interpretar las visuales en vivo, para esto decidí asignar a cada fuerza un número, al apretarlo se apagan o prenden y de paso si dejo presionada alguna letra desde la "q" hacia la derecha y las flechas del teclado modifica los parámetros de la ultima fuerza elegida, entonces por ejemplo si presiono 4 selecciono la de ondas y si dejo apretada la q puedo aumentar o rebajar su fuerza con las flechas del teclado. Mantuve fuerzas del proyecto original por su potencial al juntarlas con las elegidas.
 
 Algunas pruebas con varias fuerzas aplicadas a la vez:
 
@@ -81,20 +83,23 @@ Algunas pruebas con varias fuerzas aplicadas a la vez:
 
 
 Score visual
+<a name="4"></a>
+## Bitácora de IA
+Lo primero que hice fue explicarle el contexto completo del proyecto a la ia, con esto me refiero a los archivos y los códigos para que tuviera una visión sobre la cual trabajar, además de marcarle partes de la estructura relevantes e importantes que tenían que permanecer. 
+<a name="5"></a>
+<img width="496" height="274" alt="image" src="https://github.com/user-attachments/assets/6a2d5503-d4a8-40d5-a69c-6ec9494bc527" />
 
-Bitácora de IA
-
-Autoevaluación ponderada
+De aquí explique las fuerzas que quería implementar una a una aislándolas y asegurándome que por si mismas fueran lo que buscaba, si sabia que era lo que quería pero no estaba seguro de la ecuación que lo regía también le preguntaba y le explicaba donde implementarlo. Los cambios o decisiones relevantes fueron: Primero hubo una fuerza que quise implementar pero descarté por completo que fue el ruido, no lograba el resultado que buscaba y al final consideré que solo era algo que no se relacionaba mucho por donde yo me dirigía. Lo segundo fue fue lo de gravedad doble, las partículas eran más caóticas de lo buscado pero gracias a que incluyó la posibilidad de mover los parámetros pude ver el potencial en la gravedad doble por si sola, y en las colisiones para efectos mínimos. (todas pruebas en la sección de pruebas arriba)
 
 ### Autoevaluación:
 | Criterio | Peso | Valoración | Aporte | Evidencia|
 |----------|:-------:|:---------:|:---------:|-----------|
-| La intención es clara y perceptible en el comportamiento. | 20% | 100% | 20 | [Se puede ver en las evidencias como la intención es clara, se evidencia la dinámica de la propagación y sus distintos tipos ante la caza de la voracidad](#1)|
-| Los tipos, cantidades, matriz y parámetros están justificados desde la intención. | 25% | 90% | 22.5 | [Justifiqué el porqué de la mayoría de los parámetros, algunos están sin explicar porque estaban bien así, sin embargo son pocos](#2) |
-| Comprendo y puedo modificar el funcionamiento técnico del sistema. | 20% | 80% | 16 | [Evidencia](#3) |
-| El sistema produce variaciones con una identidad reconocible. | 15% | 100% | 15 | [Evidencia](#3) |
-| Experimenté, comparé, seleccioné y descarté con criterios claros. | 10% | 90% | 9 | [Se pudo ver como cambié entre versiones, tenia claro que fallaba y sabia por donde podía ir para arreglarlo ayudándome de la IA](#4) |
-| Puedo distinguir y sustentar lo diseñado y lo emergente. | 10% | 100% | 10 | [Evidencia](#3) |
+| Trazabilidad y comprensión del sistema | 25% | 0 | 25 | [Comprendí el modelo del sistema, donde se debían ubicar las fuerzas y como se integraba todo](#2)|
+| Verificación del algoritmo de fuerzas | 25% | 100 | 25 | [Comprendí las fuerzas implicadas, en que parte del código se almacenaban y como agregar unas nuevas, dirigiendo así a la IA sin estar a lo ciego de que se hacía](#1) |
+| Diseño de fuerzas e intención | 20% | 100 | 20 | [Modifique las fuerzas para poder dar las reacciones que buscaba con una intención de diseño detrás](#3) |
+| Instrumento, score e interpretación | 15% | 0 | 15 | [Score final](#4) |
+| Experimentación y criterio frente a la IA | 10% | 100 | 9 | [Revisé y aislé lo que la IA me entregó y realicé cambios según mi juicio](#5) |
+|Entrega técnica y documentación | 5 | 100% | 5 | [Entrega URL](#6) |
 
 Total: 
 
