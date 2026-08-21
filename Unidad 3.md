@@ -26,7 +26,7 @@ $L$ (Límite): Un multiplicador binario (1 o 0) que anula la fuerza si la distan
 | Repulsión | radial - | velocidad = 0 | aceleración alejándose |
 | Vórtice | radial suave + tangencial | velocidad = 0 | aparece giro, no solo caída radial |
 
-La segunda fuerza es una de repusliín
+La segunda fuerza es una de repulsión
 
 ## Registro de pruebas
 ### Ondas
@@ -47,10 +47,17 @@ en el segundo intento resultó como se buscaba, también puedo modificar su gros
 
 <img width="927" height="888" alt="image" src="https://github.com/user-attachments/assets/6d8450e6-2787-4456-bbd9-6a772d5f085c" />
 
-### Ruido
-<img width="1131" height="804" alt="image" src="https://github.com/user-attachments/assets/be14c466-522d-47fc-afa4-8a49af8e6d67" />
+### Caida y subida
+<img width="1152" height="1206" alt="image" src="https://github.com/user-attachments/assets/25ad7909-0723-41ac-add0-84c1390e9285" />
 
+<img width="1245" height="1186" alt="image" src="https://github.com/user-attachments/assets/cad1f02b-ce24-49c6-a2df-f47d69242397" />
 
+<img width="1002" height="700" alt="image" src="https://github.com/user-attachments/assets/ca583b9a-0425-4607-afdc-be5f4e565ef9" />
+<img width="780" height="902" alt="image" src="https://github.com/user-attachments/assets/5eb2a7d6-a5dd-493c-912f-75fd91e2ea91" />
+
+<img width="1677" height="1200" alt="image" src="https://github.com/user-attachments/assets/87c2bee0-b883-4293-b690-5e7a7dc156f1" />
+
+<img width="1844" height="1314" alt="image" src="https://github.com/user-attachments/assets/12903e5f-ef84-4a7b-b7ff-3fc4e86c891c" />
 
 Score visual
 
