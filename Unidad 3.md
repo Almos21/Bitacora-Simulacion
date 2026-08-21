@@ -1,4 +1,4 @@
-u# Unidad 3
+# Unidad 3
 <a name="6"></a>
 ## Instrumento funcional
 [Link a instrumento](https://almos21.github.io/test-sim/)
@@ -80,8 +80,11 @@ Algunas pruebas con varias fuerzas aplicadas a la vez:
 <img width="684" height="463" alt="image" src="https://github.com/user-attachments/assets/db53831a-f492-40f5-a6ca-36dc36de702f" />
 
 
-Score visual
+## Score visual
 <a name="4"></a>
+Primer momento: Ondas en básico subiendo la q y la w NUNCA LA E hasta que empiece el primer sonido, aquí se activa 8, desc 4, act 1, subir q y w, 6 subir w, 3 y 5, w 5 subir.
+De aquí en adelante formar columnas aprovechando 1, jugar con la velocidad max para alterar colores y formar singularidades que explotan utilizando 4 y 2, al formar figuras estables romperlas con 8. puntos clave en la canción: 1:04 empieza a hacer ruido, alterar todo para luego unirlo con 1 fuertísimo y hacer las figuras, 1:50 se empieza a calmar todo menos radial y medio bajar la fricción, luego explotar y de aqui en adelante la canción se vuelve más repetitiva, jugar con los estados de caos y belleza según el sonido.
+
 ## Bitácora de IA
 Lo primero que hice fue explicarle el contexto completo del proyecto a la ia, con esto me refiero a los archivos y los códigos para que tuviera una visión sobre la cual trabajar, además de marcarle partes de la estructura relevantes e importantes que tenían que permanecer. 
 <a name="5"></a>
@@ -101,9 +104,9 @@ Al final los cambios se realizaron dentro de sus secciones y bloques definidos o
 | Trazabilidad y comprensión del sistema | 25% | 100 | 25 | [Comprendí el modelo del sistema, donde se debían ubicar las fuerzas y como se integraba todo](#2)|
 | Verificación del algoritmo de fuerzas | 25% | 100 | 25 | [Comprendí las fuerzas implicadas, en que parte del código se almacenaban y como agregar unas nuevas, dirigiendo así a la IA sin estar a lo ciego de que se hacía](#1) |
 | Diseño de fuerzas e intención | 20% | 100 | 20 | [Modifique las fuerzas para poder dar las reacciones que buscaba con una intención de diseño detrás](#3) |
-| Instrumento, score e interpretación | 15% | 0 | 0 | [Score final](#4) |
+| Instrumento, score e interpretación | 15% | 100 | 15 | [Score final](#4) |
 | Experimentación y criterio frente a la IA | 10% | 100 | 10 | [Revisé y aislé lo que la IA me entregó y realicé cambios según mi juicio](#5) |
 |Entrega técnica y documentación | 5 | 100% | 5 | [Entrega URL](#6) |
 
-Total: 
+Total: 5
 
