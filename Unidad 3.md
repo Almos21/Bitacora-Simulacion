@@ -3,8 +3,6 @@
 ## Instrumento funcional
 [Link a instrumento](https://almos21.github.io/test-sim/)
 
-## Mapa del sistema
-<a name="2"></a>
 ## Ficha de fuerzas
 <a name="1"></a>
 ### Ondas
@@ -91,13 +89,19 @@ Lo primero que hice fue explicarle el contexto completo del proyecto a la ia, co
 
 De aquí explique las fuerzas que quería implementar una a una aislándolas y asegurándome que por si mismas fueran lo que buscaba, si sabia que era lo que quería pero no estaba seguro de la ecuación que lo regía también le preguntaba y le explicaba donde implementarlo. Los cambios o decisiones relevantes fueron: Primero hubo una fuerza que quise implementar pero descarté por completo que fue el ruido, no lograba el resultado que buscaba y al final consideré que solo era algo que no se relacionaba mucho por donde yo me dirigía. Lo segundo fue fue lo de gravedad doble, las partículas eran más caóticas de lo buscado pero gracias a que incluyó la posibilidad de mover los parámetros pude ver el potencial en la gravedad doble por si sola, y en las colisiones para efectos mínimos. (todas pruebas en la sección de pruebas arriba)
 
+## Mapa del sistema final
+<a name="2"></a>
+Los controles son las teclas de 1 a 8, las flechas del teclado y de Q hacia la derecha, estos modifican los parámetros en ''parameters.js'' los cuales son usados para identificar el estado de cada partícula a partir de las fuerzas, esto toma en cuenta todo lo que afecta a la partícula y actualiza su poscición y velocidad que se almacena e los buffers y se actualiza cada frame y renderiza, aun usando la misma estructura original y almacenandose las fuerzas en el ''createSimulation.js'' en el bloque de fuerzas.
+
+Al final los cambios se realizaron dentro de sus secciones y bloques definidos originalmente, sin afectar la arquitectura general y siendo fácil de modificar.
+
 ### Autoevaluación:
 | Criterio | Peso | Valoración | Aporte | Evidencia|
 |----------|:-------:|:---------:|:---------:|-----------|
-| Trazabilidad y comprensión del sistema | 25% | 0 | 25 | [Comprendí el modelo del sistema, donde se debían ubicar las fuerzas y como se integraba todo](#2)|
+| Trazabilidad y comprensión del sistema | 25% | 100 | 25 | [Comprendí el modelo del sistema, donde se debían ubicar las fuerzas y como se integraba todo](#2)|
 | Verificación del algoritmo de fuerzas | 25% | 100 | 25 | [Comprendí las fuerzas implicadas, en que parte del código se almacenaban y como agregar unas nuevas, dirigiendo así a la IA sin estar a lo ciego de que se hacía](#1) |
 | Diseño de fuerzas e intención | 20% | 100 | 20 | [Modifique las fuerzas para poder dar las reacciones que buscaba con una intención de diseño detrás](#3) |
-| Instrumento, score e interpretación | 15% | 0 | 15 | [Score final](#4) |
+| Instrumento, score e interpretación | 15% | 0 | 0 | [Score final](#4) |
 | Experimentación y criterio frente a la IA | 10% | 100 | 9 | [Revisé y aislé lo que la IA me entregó y realicé cambios según mi juicio](#5) |
 |Entrega técnica y documentación | 5 | 100% | 5 | [Entrega URL](#6) |
 
