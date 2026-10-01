@@ -10,8 +10,7 @@ La canción que decidí utilizar fue Piel de la artista Arca de su álbum Arca
 
 <img width="372" height="453" alt="image" src="https://github.com/user-attachments/assets/721d599d-42aa-41e0-9d86-c3ce7e365fec" />
 
-Esta obra siempre la he sentido como algo extrañamente cercano, una vez vi a alguien decir que era como si estuvieras de nuevo dentro del útero, en un espacio caliente y cómodo sin nada más que te preocupe, escuchando los latidos de tu madre, para mi esa es una gran manera de expresar como me siento con esta canción y refuerza la idea que se me viene cuando pienso en ella y a 
-su vez en los agentes autónomos, al ver los agentes de Interactive Physarum me recordaban muchos de sus puntos a tejidos, a células y decidí aprovechar esta imagen para interpretar esta obra, como si vieras un tejido romperse y reconstruise constantemente, acompañado de la voz siendo reconocida por una luz rojiza que le da aún más vida. Acompañé esto también con venas llevadas por steering behaviors que creo manualmente con el click
+Esta obra siempre la he sentido como algo extrañamente cercano, cuando pienso en ella y a su vez en los agentes autónomos de Interactive Physarum me recordaban muchos de sus puntos a tejidos, a células y decidí aprovechar esta imagen para interpretar esta obra, como si vieras un tejido romperse y reconstruise constantemente, acompañado de la voz siendo reconocida por una luz rojiza que le da aún más vida. Acompañé esto también con venas llevadas por steering behaviors que creo manualmente con el click
 
 ## Pruebas con la IA
 La IA usada fue claude, hice varias pruebas y aquí adjunto ejemplos de lo que le pedía, resultados, etc. todo esto llevo al final donde directamente le mostré el trabajo de Interactive Physarum y tuvo mejor idea de donde agarrar
