@@ -1,7 +1,7 @@
 # Unidad 7
 <a name="6"></a>
 ## Instrumento funcional
-[Link a juego]([https://almos21.github.io/Piel-Arca-Agentes-Aut-nomos/](https://almos21.github.io/Ibis_Paint_Minigame/))
+[Link a juego](https://almos21.github.io/Ibis_Paint_Minigame/)
 
 [Link a repositorio](https://github.com/Almos21/Ibis_Paint_Minigame)
 
