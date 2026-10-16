@@ -1,32 +1,26 @@
 # Unidad 6
 <a name="6"></a>
 ## Instrumento funcional
-[Link a instrumento](https://almos21.github.io/Piel-Arca-Agentes-Aut-nomos/)
+[Link a juego]([https://almos21.github.io/Piel-Arca-Agentes-Aut-nomos/](https://almos21.github.io/Ibis_Paint_Minigame/))
 
-[Link a repositorio](https://github.com/Almos21/Piel-Arca-Agentes-Aut-nomos)
+[Link a repositorio](https://github.com/Almos21/Ibis_Paint_Minigame)
 
 ## Idea
-La canción que decidí utilizar fue Piel de la artista Arca de su álbum Arca
+En base a el logo de ibis paint, una aplicación de dibujo, decidí representar de su identidad su funcionalidad como aplicación de dibujo y las grandes posibilidades y significados que brinda a un artista el color y su uso. Para esto dividí su nombre en dos funcionalidades: el Paint tiene funciones de elegir colores de una paleta con los colores de la P de su logo, alterar las lineas con la letra a, ilustrar con la letra i como pincel, borrar con la letra n de nada, y trasladar con la letra t. en cuanto a el ibis me inspiré en los ibis, pajaritos con pico a los que se cree referencia el nombre de esta empresa, así que diseñe una idea de como queria que se transfigurara el ibis y decidí que cada color tendria un efecto distinto sobre este, explorando así varios significados del color debido a como relacioné la acción con el color (azul lo pone triste, amarillo feliz, rojo enojado, etc.)
 
-<img width="372" height="453" alt="image" src="https://github.com/user-attachments/assets/721d599d-42aa-41e0-9d86-c3ce7e365fec" />
+<img width="2074" height="1980" alt="image" src="https://github.com/user-attachments/assets/7763eb56-63d1-40c4-b3a8-c7b2cdb868d8" />
 
-Esta obra siempre la he sentido como algo extrañamente cercano, cuando pienso en ella y a su vez en los agentes autónomos de Interactive Physarum me recordaban muchos de sus puntos a tejidos, a células y decidí aprovechar esta imagen para interpretar esta obra, como si vieras un tejido romperse y reconstruise constantemente, acompañado de la voz siendo reconocida por una luz rojiza que le da aún más vida. Acompañé esto también con venas llevadas por steering behaviors que creo manualmente con el click
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/245a833f-b170-4d2b-847c-a6ad74436059" />
 
-## Pruebas con la IA
-La IA usada fue claude, hice varias pruebas y aquí adjunto ejemplos de lo que le pedía, resultados, etc. todo esto llevo al final donde directamente le mostré el trabajo de Interactive Physarum y tuvo mejor idea de donde agarrar
-
-<img width="1568" height="768" alt="image" src="https://github.com/user-attachments/assets/6e781651-2e89-428a-846f-7a3abd9c05b2" />
-<img width="1030" height="600" alt="image" src="https://github.com/user-attachments/assets/5ecff1e7-3c58-40a2-bfd8-b9d1bfd5c48e" />
-<img width="1270" height="952" alt="image" src="https://github.com/user-attachments/assets/ad3fe2c5-3503-485a-8857-c080b2432fbd" />
-
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/c0b5fecd-b99a-45b9-8dbf-ade89bae8f59" />
 
 ### Autoevaluación:
 | Criterio | Puntos |
 |----------|:-------:|
-| Cumplimiento del encargo: mi instrumento utiliza tecnología web, funciona en tiempo real y permite interpretar la pieza musical elegida. | 25 | 
-| Comprensión y verificación: puedo explicar y defender cómo está construido el sistema, qué perciben los agentes y cómo calculan sus acciones. Puedo predecir y verificar los cambios al modificar un parámetro. | 25 | 
-| Diseño e intención: puedo justificar la selección y combinación de comportamientos y relacionarlos con mi interpretación musical. | 25 | 
-| Interpretación humana: mi score y mis controles permiten conducir el sistema en vivo y responder a su comportamiento. | 25 | 
+| Cumplimiento del encargo: mi sistema utiliza las letras del nombre de una organización, permite jugar con ellas y funciona en tiempo real en la Web para el contexto definido. | 25 | 
+| Comprensión y verificación: puedo explicar y justificar el modelo, sus estados y sus reglas. Puedo predecir y verificar el efecto de modificar una regla o un parámetro. | 25 | 
+| Interacción e identidad: puedo justificar qué permiten descubrir las acciones y sus consecuencias sobre el atributo elegido, y contrastarlo con lo observado en las pruebas con otras personas. | 25 | 
+| Resolución tipográfica y experiencia de juego: la composición, el ritmo, los momentos de lectura y las respuestas perceptibles permiten explorar el sistema y sostienen su intención. | 25 | 
 
 Total: 100
 Nota: 5
